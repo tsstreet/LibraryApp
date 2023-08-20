@@ -2,18 +2,13 @@ global using LibraryApp.Data;
 global using Microsoft.EntityFrameworkCore;
 using LibraryApp.Controllers;
 using LibraryApp.Data.Model;
-using LibraryApp.Services.AcademicYearService;
 using LibraryApp.Services.AuthService;
 using LibraryApp.Services.ClassService;
-using LibraryApp.Services.DepartmentService;
-using LibraryApp.Services.FalcutyService;
-using LibraryApp.Services.GradeTypeService;
-using LibraryApp.Services.OffScheduleService;
-using LibraryApp.Services.ScheduleService;
-using LibraryApp.Services.StudentService;
-using LibraryApp.Services.SubjectGradeService;
+
+//using LibraryApp.Services.TeacherService;
+//using LibraryApp.Services.StudentService;
 using LibraryApp.Services.SubjectService;
-using LibraryApp.Services.TeacherService;
+
 using LibraryApp.Services.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -65,18 +60,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IStudentService, StudentService>();
-builder.Services.AddScoped<ITeacherService, TeacherService>();
-builder.Services.AddScoped<IClassService, ClassService>();
+//builder.Services.AddScoped<IStudentService, StudentService>();
+//builder.Services.AddScoped<ITeacherService, TeacherService>();
+
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IDepartmentService, DepartmentService>();
-builder.Services.AddScoped<IFalcutyService, FalcutyService>();
-builder.Services.AddScoped<IAcademicYearService, AcademicYearService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
-builder.Services.AddScoped<IScheduleService, ScheduleService>();
-builder.Services.AddScoped<IOffScheduleService, OffScheduleService>();
-builder.Services.AddScoped<IGradeTypeService, GradeTypeService>();
-builder.Services.AddScoped<ISubjectGradeService, SubjectGradeService>();
 
 var app = builder.Build();
 
