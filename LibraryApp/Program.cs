@@ -3,11 +3,12 @@ global using Microsoft.EntityFrameworkCore;
 using LibraryApp.Controllers;
 using LibraryApp.Data.Model;
 using LibraryApp.Services.AuthService;
-using LibraryApp.Services.ClassService;
 
-//using LibraryApp.Services.TeacherService;
+
+using LibraryApp.Services.TeacherService;
 //using LibraryApp.Services.StudentService;
 using LibraryApp.Services.SubjectService;
+//using LibraryApp.Services.ClassService;
 
 using LibraryApp.Services.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using LibraryApp.Services.DocumentService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,10 +63,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.Services.AddScoped<IUserService, UserService>();
 //builder.Services.AddScoped<IStudentService, StudentService>();
-//builder.Services.AddScoped<ITeacherService, TeacherService>();
+builder.Services.AddScoped<ITeacherService, TeacherService>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
+builder.Services.AddScoped<IDocumentService, DocumentService>();
 
 var app = builder.Build();
 

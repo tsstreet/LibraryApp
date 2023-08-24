@@ -11,18 +11,15 @@ namespace LibraryApp.Data.Dto
         [Required]
         public string? TeacherCode { get; set; }
 
-        [Required]
-        public string? LastName { get; set; }
 
         [Required]
-        public string? FullName { get; set; }
+        public string? Falcuty { get; set; }
+
+        [Required]
+        public string? Name { get; set; }
 
         [Required]
         public string? Gender { get; set; }
-
-        [Required]
-        [DataType(DataType.Date)]
-        public DateTime Dob { get; set; }
 
         public string? Address { get; set; }
 
@@ -32,9 +29,6 @@ namespace LibraryApp.Data.Dto
         public string? Email { get; set; }
 
         public string? ImageUrl { get; set; }
-
-        [Required]
-        public string? MainSubject { get; set; }
 
         public string? Password { get; set; }
     }

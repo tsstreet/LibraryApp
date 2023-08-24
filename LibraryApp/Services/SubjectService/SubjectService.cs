@@ -1,10 +1,9 @@
 ﻿using LibraryApp.Data.Model;
-using LibraryApp.Services.ClassService;
 using LibraryApp.Services.SubjectService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace LibraryApp.Services.ClassService
+namespace LibraryApp.Services.SubjectService
 {
     public class SubjectService : ISubjectService
     {
@@ -49,6 +48,7 @@ namespace LibraryApp.Services.ClassService
 
             subjectUpdate.SubjectCode = subject.SubjectCode;
             subjectUpdate.Name = subject.Name;
+            subjectUpdate.Description = subject.Description;
 
             await _context.SaveChangesAsync();
 

@@ -23,5 +23,11 @@ namespace LibraryApp.Data.Model
         public DbSet<User> Users { get; set; }
         public DbSet<Subject> Subjects { get; set; }
 
+        public DbSet<Class> Classes { get; set; }
+
+        public DbSet<Document> Documents { get; set; }
+
+        public DbSet<Document> Lectures { get; set; }
+
     }
 }

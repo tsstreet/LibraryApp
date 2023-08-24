@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LibraryApp.Data.Model;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibraryApp.Data.Dto
@@ -15,10 +16,20 @@ namespace LibraryApp.Data.Dto
         public string? Name { get; set; }
 
         [Required]
-        public int DepartmentId { get; set; }
+        public int TeacherId { get; set; }
 
         [Required]
-        public int FalcutyId { get; set; }
+        public string? Description { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime DateSubmit { get; set; }
+
+        [Required]
+        public string? DocumentStatus { get; set; }
+
+        [Required]
+        public string? NumOfWaiting { get; set; }
 
     }
 }

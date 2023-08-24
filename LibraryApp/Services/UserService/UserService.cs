@@ -1,6 +1,5 @@
 ﻿using LibraryApp.Data.Dto;
 using LibraryApp.Data.Model;
-using LibraryApp.Services.TeacherService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;

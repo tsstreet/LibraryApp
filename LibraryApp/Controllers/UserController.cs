@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using LibraryApp.Data.Dto;
-using LibraryApp.Services.TeacherService;
 using LibraryApp.Services.UserService;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
@@ -12,7 +11,7 @@ namespace LibraryApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;

@@ -12,18 +12,11 @@ namespace LibraryApp.Data.Dto
         public string? StdCode { get; set; }
 
         [Required]
-        public string? LastName { get; set; }
-
-        [Required]
-        public string? FullName { get; set; }
+        public string? Name { get; set; }
 
         [Required]
         public string? Gender { get; set; }
 
-        [Required]
-        [DataType(DataType.Date)]
-        public DateTime Dob { get; set; }
-        public string? ParentName { get; set; }
         public string? Address { get; set; }
         public string? Phone { get; set; }
 

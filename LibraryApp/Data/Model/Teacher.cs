@@ -9,20 +9,16 @@ namespace LibraryApp.Data.Model
         public int TeacherId { get; set; }
 
         [Required]
-        public string? TeacherCode { get; set; }
+        public string? TeacherCode { get; set; } 
 
         [Required]
-        public string? LastName { get; set; }
+        public string? Name { get; set; }
 
         [Required]
-        public string? FullName { get; set; }
+        public string? Falcuty { get; set; }
 
         [Required]
         public string? Gender { get; set; }
-
-        [Required]
-        [DataType(DataType.Date)]
-        public DateTime Dob { get; set; }
 
         public string? Address { get; set; }
 
@@ -34,13 +30,12 @@ namespace LibraryApp.Data.Model
 
         public string? ImageUrl { get; set; }
 
-        [Required]
-        public string? MainSubject { get; set; }
-
         [MinLength(6)]
         public string? Password { get; set; }
 
-        public ICollection<Schedule> Schedules { get; set; }
+        public ICollection<Subject> Subjects { get; set; }
+
+        public ICollection<Lecture> Lectures { get; set; }
 
         public void SetPassword(byte[] passwordHash, byte[] passwordSalt)
         {

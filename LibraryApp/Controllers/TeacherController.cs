@@ -14,7 +14,7 @@ namespace LibraryApp.Controllers
     {
         private readonly ITeacherService _teacherService;
         private readonly IMapper _mapper;
-        public TeacherController (ITeacherService teacherService, IMapper mapper) 
+        public TeacherController(ITeacherService teacherService, IMapper mapper)
         {
             _teacherService = teacherService;
             _mapper = mapper;
@@ -26,7 +26,7 @@ namespace LibraryApp.Controllers
             var teacher = await _teacherService.GetTeachers();
 
             var teacherDto = _mapper.Map<List<Teacher>>(teacher);
-            
+
             return Ok(teacherDto);
         }
 
@@ -38,7 +38,7 @@ namespace LibraryApp.Controllers
             var teacherDto = _mapper.Map<Teacher>(teacher);
 
             return Ok(teacherDto);
-            
+
         }
 
         [HttpPost]
@@ -46,7 +46,7 @@ namespace LibraryApp.Controllers
         {
             var teacherEntity = _mapper.Map<Teacher>(teacher);
             var teacherAdd = await _teacherService.AddTeacher(teacherEntity);
-        
+
             return Ok(teacherAdd);
         }
 
@@ -66,12 +66,12 @@ namespace LibraryApp.Controllers
             return Ok(teacher);
         }
 
-        [HttpGet("{id}/schedule")]
-        public async Task<IActionResult> GetScheduleByTeacher(int id)
+        [HttpGet("{id}/subject")]
+        public async Task<IActionResult> GetSubjectByTeacher(int id)
         {
-            var schedule = await _teacherService.GetScheduleByTeacher(id);
+            var subject = await _teacherService.GetSubjectByTeacher(id);
 
-            return Ok(schedule);
+            return Ok(subject);
         }
 
         [HttpGet("search")]

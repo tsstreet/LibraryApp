@@ -3,16 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibraryApp.Data.Model
 {
-    public class Subject
+    public class Document
     {
         [Key]
-        public int SubjectId { get; set; }
-
-        [Required]
-        public string? SubjectCode { get; set; }
+        public int DocumentId { get; set; }
 
         [Required]
         public string? Name { get; set; }
+
+        [Required]
+        public string? Category { get; set; }
 
         [Required]
         public int TeacherId { get; set; }
@@ -20,17 +20,15 @@ namespace LibraryApp.Data.Model
         public Teacher Teacher { get; set; }
 
         [Required]
-        public string? Description { get; set; }
-
-        [Required]
         [DataType(DataType.Date)]
         public DateTime DateSubmit { get; set; }
 
         [Required]
-        public string? DocumentStatus { get; set; }
+        public string? Status { get; set; } = "waiting";
+
+        public string? Note { get; set; }
 
         [Required]
-        public string? NumOfWaiting { get; set; }
-
+        public bool IsApproved { get; set; } = false;
     }
 }

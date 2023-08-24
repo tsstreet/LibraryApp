@@ -1,23 +1,23 @@
-﻿//using LibraryApp.Data.Model;
-//using Microsoft.AspNetCore.Mvc;
-//using NuGet.Protocol.Plugins;
+﻿using LibraryApp.Data.Model;
+using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Plugins;
 
-//namespace LibraryApp.Services.TeacherService
-//{
-//    public interface ITeacherService
-//    {
-//        Task<List<Teacher>> GetTeachers();
+namespace LibraryApp.Services.TeacherService
+{
+    public interface ITeacherService
+    {
+        Task<List<Teacher>> GetTeachers();
 
-//        Task<Teacher> GetTeacherById(int id);
+        Task<Teacher> GetTeacherById(int id);
 
-//        Task<Teacher> AddTeacher(Teacher teacher);
+        Task<Teacher> AddTeacher(Teacher teacher);
 
-//        Task<Teacher> UpdateTeacher(int id, Teacher teacher);
+        Task<Teacher> UpdateTeacher(int id, Teacher teacher);
 
-//        Task<Teacher> DeleteTeacher(int id);
+        Task<Teacher> DeleteTeacher(int id);
 
-//        Task<ICollection<Schedule>> GetScheduleByTeacher(int id);
+        Task<ICollection<Subject>> GetSubjectByTeacher(int id);
 
-//        Task<List<Teacher>> Search(string searchString);
-//    }
-//}
+        Task<List<Teacher>> Search(string searchString);
+    }
+}
