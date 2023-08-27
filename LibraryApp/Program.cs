@@ -18,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using LibraryApp.Services.DocumentService;
+using LibraryApp.Services.LectureFileService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,6 +69,8 @@ builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
+
+builder.Services.AddScoped<ILectureFileService, LectureFileService>();
 
 var app = builder.Build();
 

@@ -27,7 +27,7 @@ namespace LibraryApp.Data.Model
 
         public DbSet<Document> Documents { get; set; }
 
-        public DbSet<Document> Lectures { get; set; }
+        public DbSet<LectureFile> LectureFiles { get; set; }
 
     }
 }

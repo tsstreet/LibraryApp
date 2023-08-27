@@ -35,7 +35,7 @@ namespace LibraryApp.Data.Model
 
         public ICollection<Subject> Subjects { get; set; }
 
-        public ICollection<Lecture> Lectures { get; set; }
+        //public ICollection<Lecture> Lectures { get; set; }
 
         public void SetPassword(byte[] passwordHash, byte[] passwordSalt)
         {

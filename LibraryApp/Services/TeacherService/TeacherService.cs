@@ -124,12 +124,12 @@ namespace LibraryApp.Services.TeacherService
         }
 
 
-        public async Task<ICollection<Lecture>> GetLectureByTeacher(int id)
-        {
-            var schedule = await _context.Teachers.Where(x => x.TeacherId == id).Select(c => c.Lectures).FirstOrDefaultAsync();
+        //public async Task<ICollection<Lecture>> GetLectureByTeacher(int id)
+        //{
+        //    var schedule = await _context.Teachers.Where(x => x.TeacherId == id).Select(c => c.Lectures).FirstOrDefaultAsync();
 
-            return schedule.ToList();
-        }
+        //    return schedule.ToList();
+        //}
 
 
         public async Task<List<Teacher>> Search(string searchString)
