@@ -16,6 +16,8 @@ namespace LibraryApp.Services.LectureFileService
         Task<LectureFile> DeleteLectureFile(int id);
         Task<List<LectureFile>> Search(string searchString);
 
-        Task<List<LectureFile>> CreateLectureFile(LectureFile lectureFile);
+        //Task<string> CreateLectureFile(LectureFile lectureFile);
+
+        Task<string> CreateLectureFile(LectureFile lectureFile);
     }
 }

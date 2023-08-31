@@ -40,13 +40,21 @@ namespace LibraryApp.Controllers
             return Ok(getLectureFileDto);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateLecture([FromForm] LectureFileDto lectureFile)
-        {
-            var lectureFileMap = _mapper.Map<LectureFile>(lectureFile);
-            var lectureFileGet = await _lectureFileService.CreateLectureFile(lectureFileMap);
+        //[HttpPost]
+        //public async Task<IActionResult> CreateLecture([FromForm] LectureFileDto lectureFile)
+        //{
+        //    var lectureFileMap = _mapper.Map<LectureFile>(lectureFile);
+        //    var lectureFileGet = await _lectureFileService.CreateLectureFile(lectureFileMap);
             
-            return Ok(lectureFileGet);
+        //    return Ok(lectureFileGet);
+        //}
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromForm] LectureFileDto lectureFile)
+        {
+                var lectureFileMap = _mapper.Map<LectureFile>(lectureFile);
+                var lectureFileGet = await _lectureFileService.CreateLectureFile(lectureFileMap);
+                return Ok(lectureFileGet);
         }
 
         //[HttpPut("{id}")]

@@ -19,7 +19,7 @@ namespace LibraryApp.Data.Model
         public string? Name { get; set; }
 
         [NotMapped]
-        public IFormFile File { get; set; }
+        public List<IFormFile>File { get; set; }
 
         public string? Size { get; set; }
 

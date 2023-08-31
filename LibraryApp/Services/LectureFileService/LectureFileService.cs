@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -58,29 +59,40 @@ namespace LibraryApp.Services.LectureFileService
         //    return subject;
         //}
 
-        //public async Task<Subject> UpdateSubject(int id, Subject subject)
-        //{
-        //    var subjectUpdate = await _context.Subjects.FindAsync(id);
+        public async Task<string> RenameLectureFile(int id, string reName)
+        {
+            var lectureFile = await _context.LectureFiles.FindAsync(id);
 
-        //    subjectUpdate.SubjectCode = subject.SubjectCode;
-        //    subjectUpdate.Name = subject.Name;
-        //    subjectUpdate.Description = subject.Description;
+            var fileExtension = Path.GetExtension(lectureFile.Name);
 
-        //    await _context.SaveChangesAsync();
+            var newFileName = $"{reName}{fileExtension}";
 
-        //    return subjectUpdate;
-        //}
+            lectureFile.Name = newFileName;
+
+            await _context.SaveChangesAsync();
+
+            return reName;
+        }
 
         public async Task<LectureFile> DeleteLectureFile(int id)
         {
 
-            var subject = await _context.LectureFiles.FindAsync(id);
+            var lectureFile = await _context.LectureFiles.FindAsync(id);
 
-            _context.LectureFiles.Remove(subject);
+            if (lectureFile != null)
+            {
+                 var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files", lectureFile.Name);
 
-            await _context.SaveChangesAsync();
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
 
-            return subject;
+                _context.LectureFiles.Remove(lectureFile);
+                await _context.SaveChangesAsync();
+            }
+
+            return lectureFile;
         }
 
         public async Task<List<LectureFile>> Search(string searchString)
@@ -141,39 +153,84 @@ namespace LibraryApp.Services.LectureFileService
         //    return "content";
         //}
 
-        public async Task<List<LectureFile>> CreateLectureFile(LectureFile lectureFile)
+        //public async Task<string> CreateLectureFile(LectureFile lectureFile)
+        //{
+        //    if (!Directory.Exists(_webHostEnvironment.ContentRootPath + "\\Files\\"))
+        //    {
+        //        Directory.CreateDirectory(_webHostEnvironment.ContentRootPath + "\\Files\\");
+        //    }
+
+        //    if (lectureFile.File != null && lectureFile.File.Length > 0)
+        //    {
+        //        var uploadFolderPath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files"); 
+
+        //        if (!Directory.Exists(uploadFolderPath))
+        //            Directory.CreateDirectory(uploadFolderPath);
+
+        //        var fileName = Path.GetFileName(lectureFile.File.FileName);
+
+
+        //        var filePath = Path.Combine(uploadFolderPath, fileName);
+        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            await lectureFile.File.CopyToAsync(fileStream);
+        //        }
+
+        //        lectureFile.Name = fileName;
+        //        lectureFile.Size = FormatFileSize(lectureFile.File.Length);
+        //        lectureFile.FileType = DetectFileType(lectureFile.File);
+        //    }
+
+        //    _context.LectureFiles.Add(lectureFile);
+        //    await _context.SaveChangesAsync();
+
+        //    return "Ok";
+        //}
+
+        public async Task<string> CreateLectureFile(LectureFile lectureFile)
         {
-
-            string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath + "\\Files\\"); // Change "uploads" to the desired upload directory
-
-                // Create the uploads directory if it doesn't exist
-                if (!Directory.Exists(uploadPath))
-                {
-                    Directory.CreateDirectory(uploadPath);
-                }
-
-            if (lectureFile.File != null && lectureFile.File.Length > 0)
+            if (!Directory.Exists(_webHostEnvironment.ContentRootPath + "\\Files\\"))
             {
-                string filePath = Path.Combine(uploadPath, lectureFile.File.FileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await lectureFile.File.CopyToAsync(fileStream);
-                }
-
-                // Update lectureFile properties with file details
-                lectureFile.Name = lectureFile.File.FileName;
-                lectureFile.Size = FormatFileSize(lectureFile.File.Length);
-                lectureFile.FileType = DetectFileType(lectureFile.File);
+                Directory.CreateDirectory(_webHostEnvironment.ContentRootPath + "\\Files\\");
             }
 
-            _context.LectureFiles.Add(lectureFile);
-            await _context.SaveChangesAsync();
+            if (lectureFile.File != null && lectureFile.File.Count > 0)
+            {
+                var uploadFolderPath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files");
 
-            return new List<LectureFile> { lectureFile };
+                if (!Directory.Exists(uploadFolderPath))
+                    Directory.CreateDirectory(uploadFolderPath);
+
+                var lectureFiles = new List<LectureFile>();
+
+                foreach (var file in lectureFile.File)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var filePath = Path.Combine(uploadFolderPath, fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+
+                    var newLectureFile = new LectureFile
+                    {
+                        SubjectId = lectureFile.SubjectId,
+                        Name = fileName, 
+                        Size = FormatFileSize(file.Length),
+                        FileType = DetectFileType(file),
+                        SubmitDate = lectureFile.SubmitDate
+                    };
+
+                    lectureFiles.Add(newLectureFile);
+                }
+
+                _context.LectureFiles.AddRange(lectureFiles);
+                await _context.SaveChangesAsync();
+            }
+
+            return "OK";
         }
-
-    
 
         private string FormatFileSize(long bytes)
         {
