@@ -40,6 +40,14 @@ namespace LibraryApp.Controllers
             return Ok(getSubjectDto);
         }
 
+
+        [HttpGet("{id}/download")]
+        public async Task<IActionResult> DownloadFileBySubject(int id)
+        {
+            var getSubject = await _subjectService.DownloadFiles(id);
+            return Ok(getSubject);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddSubject(SubjectDto subject)
         {
@@ -64,6 +72,14 @@ namespace LibraryApp.Controllers
             var deleteSubject = await _subjectService.DeleteSubject(id);
 
             return Ok(deleteSubject);
+        }
+
+        [HttpGet("{id}/file")]
+        public async Task<IActionResult> GetFileBySubject(int id)
+        {
+            var subject = await _subjectService.GetFileBySubject(id);
+
+            return Ok(subject);
         }
 
         [HttpGet("search")]

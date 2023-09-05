@@ -90,5 +90,18 @@ namespace LibraryApp.Services.DocumentService
 
             return document;
         }
+
+        public async Task<Document> UnApprove(int id)
+        {
+            // Phê duyệt tài liệu
+            var document = _context.Documents.FirstOrDefault(d => d.DocumentId == id);
+
+            document.IsApproved = false;
+            document.Status = "Not Approved";
+
+            await _context.SaveChangesAsync();
+
+            return document;
+        }
     }
 }

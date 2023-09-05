@@ -59,10 +59,18 @@ namespace LibraryApp.Controllers
             return Ok(documentGet);
         }
 
-        [HttpPut("approve/{id}")]
+        [HttpPut("{id}/approve")]
         public async Task<IActionResult> Approve(int id)
         {
             var documentGet = await _documentService.Approve(id);
+
+            return Ok(documentGet);
+        }
+
+        [HttpPut("{id}/unapprove")]
+        public async Task<IActionResult> UnApprove(int id)
+        {
+            var documentGet = await _documentService.UnApprove(id);
 
             return Ok(documentGet);
         }

@@ -1,4 +1,5 @@
 ﻿using LibraryApp.Data.Model;
+using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Plugins;
 
 namespace LibraryApp.Services.SubjectService
@@ -15,5 +16,8 @@ namespace LibraryApp.Services.SubjectService
 
         Task<Subject> DeleteSubject(int id);
         Task<List<Subject>> Search(string searchString);
+
+        Task<ICollection<LectureFile>> GetFileBySubject(int id);
+        Task<FileStreamResult> DownloadFiles(int subjectId);
     }
 }

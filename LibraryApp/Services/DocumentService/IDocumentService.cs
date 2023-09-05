@@ -15,7 +15,8 @@ namespace LibraryApp.Services.DocumentService
 
         Task<Document> DeleteDocument(int id);
         Task<List<Document>> Search(string searchString);
-
         Task<Document> Approve(int id);
+
+        Task<Document> UnApprove(int id);
     }
 }
