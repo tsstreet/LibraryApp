@@ -1,4 +1,5 @@
-﻿using LibraryApp.Data.Model;
+﻿using LibraryApp.Data.Dto;
+using LibraryApp.Data.Model;
 using LibraryApp.Services.SubjectService;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -299,5 +301,21 @@ namespace LibraryApp.Services.LectureFileService
         //    // Return a default user or handle the case when the token is not provided
         //    return "Anonymous";
         //}
+
+        public async Task<FileDownloadResult> DownloadFile(int lectureFileId)
+        {
+            var lectureFile = await _context.LectureFiles.FindAsync(lectureFileId);
+
+            var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files", lectureFile.Name);
+
+            var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
+
+            return new FileDownloadResult
+            {
+                FileBytes = fileBytes,
+                FileName = lectureFile.Name
+            };
+        }
+
     }
 }

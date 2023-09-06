@@ -8,6 +8,8 @@ using System.IO.Compression;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using NuGet.Packaging;
+using System.Net.Http.Headers;
+
 
 namespace LibraryApp.Services.SubjectService
 {
@@ -109,13 +111,12 @@ namespace LibraryApp.Services.SubjectService
                 {
                     var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files", lectureFile.Name);
 
-                    if (System.IO.File.Exists(filePath))
-                    {
-                        var entryName = lectureFile.Name;
-                        var entry = zipArchive.CreateEntry(entryName, CompressionLevel.Optimal);
+                    var entryName = lectureFile.Name;
+                    var entry = zipArchive.CreateEntry(entryName, CompressionLevel.Optimal);
 
-                        using (var entryStream = entry.Open())
-                        using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                    using (var entryStream = entry.Open())
+                    {
+                        using (var fileStream = new FileStream(filePath, FileMode.Open))
                         {
                             await fileStream.CopyToAsync(entryStream);
                         }
@@ -125,7 +126,7 @@ namespace LibraryApp.Services.SubjectService
 
             memoryStream.Position = 0;
 
-            return new FileStreamResult(memoryStream, "application/zip")
+            return new FileStreamResult(memoryStream, new MediaTypeHeaderValue("application/octet-stream").ToString())
             {
                 FileDownloadName = $"subject_{subjectId}_files.zip"
             };

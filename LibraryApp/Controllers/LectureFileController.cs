@@ -69,9 +69,17 @@ namespace LibraryApp.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLectureFile(int id)
         {
-            var deleteSubject = await _lectureFileService.DeleteLectureFile(id);
+            var deleteLectureFile = await _lectureFileService.DeleteLectureFile(id);
 
-            return Ok(deleteSubject);
+            return Ok(deleteLectureFile);
+        }
+
+        [HttpGet("{id}/download")]
+        public async Task<IActionResult> Download(int id)
+        {
+            var lectureFile = await _lectureFileService.DownloadFile(id);
+
+            return File(lectureFile.FileBytes, "application/octet-stream", lectureFile.FileName);
         }
 
         [HttpGet("search")]

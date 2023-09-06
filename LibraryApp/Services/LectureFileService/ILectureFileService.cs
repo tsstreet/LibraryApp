@@ -1,4 +1,6 @@
-﻿using LibraryApp.Data.Model;
+﻿using LibraryApp.Data.Dto;
+using LibraryApp.Data.Model;
+using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Plugins;
 
 namespace LibraryApp.Services.LectureFileService
@@ -19,5 +21,7 @@ namespace LibraryApp.Services.LectureFileService
         //Task<string> CreateLectureFile(LectureFile lectureFile);
 
         Task<string> CreateLectureFile(LectureFile lectureFile);
+
+        Task<FileDownloadResult> DownloadFile(int lectureFileId);
     }
 }
