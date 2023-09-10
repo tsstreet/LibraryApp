@@ -9,6 +9,7 @@ namespace LibraryApp.Data.Model
         [Key]
         public int AcademicYearId { get; set; }
 
+
         [Required]
         public string? AcademicYearCode { get; set; }
 

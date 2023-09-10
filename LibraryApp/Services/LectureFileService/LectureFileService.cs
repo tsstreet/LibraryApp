@@ -189,7 +189,7 @@ namespace LibraryApp.Services.LectureFileService
         //    return "Ok";
         //}
 
-        public async Task<string> CreateLectureFile(LectureFile lectureFile)
+        public async Task<string> UploadLectureFile(LectureFile lectureFile)
         {
             if (!Directory.Exists(_webHostEnvironment.ContentRootPath + "\\Files\\"))
             {

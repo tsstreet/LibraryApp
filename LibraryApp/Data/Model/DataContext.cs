@@ -29,5 +29,9 @@ namespace LibraryApp.Data.Model
 
         public DbSet<LectureFile> LectureFiles { get; set; }
 
+        public DbSet<PrivateFile> PrivateFiles { get; set; }
+
+        public DbSet<Exam> Exams { get; set; }
+
     }
 }

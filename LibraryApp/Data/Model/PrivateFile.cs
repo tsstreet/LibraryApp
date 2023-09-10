@@ -23,5 +23,10 @@ namespace LibraryApp.Data.Model
 
         [Required]
         public string? Size { get; set; }
+
+        [NotMapped]
+        public List<IFormFile> File { get; set; }
+
+        public string? FileType { get; set; }
     }
 }

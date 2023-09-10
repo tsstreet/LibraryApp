@@ -20,8 +20,11 @@ namespace LibraryApp.Services.LectureFileService
 
         //Task<string> CreateLectureFile(LectureFile lectureFile);
 
-        Task<string> CreateLectureFile(LectureFile lectureFile);
+        Task<string> RenameLectureFile(int id, string reName);
+
+        Task<string> UploadLectureFile(LectureFile lectureFile);
 
         Task<FileDownloadResult> DownloadFile(int lectureFileId);
+
     }
 }

@@ -43,6 +43,28 @@ namespace LibraryApp.Migrations
                     b.ToTable("AcademicYear");
                 });
 
+            modelBuilder.Entity("LibraryApp.Data.Model.Choice", b =>
+                {
+                    b.Property<int>("ChoiceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChoiceId"));
+
+                    b.Property<int>("MultipleChoiceQuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ChoiceId");
+
+                    b.HasIndex("MultipleChoiceQuestionId");
+
+                    b.ToTable("Choice");
+                });
+
             modelBuilder.Entity("LibraryApp.Data.Model.Class", b =>
                 {
                     b.Property<int>("ClassId")
@@ -67,6 +89,23 @@ namespace LibraryApp.Migrations
                     b.HasIndex("AcademicYearId");
 
                     b.ToTable("Classes");
+                });
+
+            modelBuilder.Entity("LibraryApp.Data.Model.Department", b =>
+                {
+                    b.Property<int>("DepartmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DepartmentId");
+
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("LibraryApp.Data.Model.Document", b =>
@@ -108,6 +147,85 @@ namespace LibraryApp.Migrations
                     b.ToTable("Documents");
                 });
 
+            modelBuilder.Entity("LibraryApp.Data.Model.Essay", b =>
+                {
+                    b.Property<int>("EssayId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EssayId"));
+
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ExamId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EssayId");
+
+                    b.HasIndex("ExamId");
+
+                    b.ToTable("Essay");
+                });
+
+            modelBuilder.Entity("LibraryApp.Data.Model.Exam", b =>
+                {
+                    b.Property<int>("ExamId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExamId"));
+
+                    b.Property<string>("Creator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateSubmit")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Duration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Form")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExamId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Exams");
+                });
+
             modelBuilder.Entity("LibraryApp.Data.Model.LectureFile", b =>
                 {
                     b.Property<int>("LectureFileId")
@@ -137,6 +255,67 @@ namespace LibraryApp.Migrations
                     b.HasIndex("SubjectId");
 
                     b.ToTable("LectureFiles");
+                });
+
+            modelBuilder.Entity("LibraryApp.Data.Model.MultipleChoiceQuestion", b =>
+                {
+                    b.Property<int>("MultipleChoiceQuestionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MultipleChoiceQuestionId"));
+
+                    b.Property<string>("CorrectAnswer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ExamId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MultipleChoiceQuestionId");
+
+                    b.HasIndex("ExamId");
+
+                    b.ToTable("MultipleChoiceQuestion");
+                });
+
+            modelBuilder.Entity("LibraryApp.Data.Model.PrivateFile", b =>
+                {
+                    b.Property<int>("PrivateFileId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PrivateFileId"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastEdited")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Modifier")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PrivateFileId");
+
+                    b.ToTable("PrivateFiles");
                 });
 
             modelBuilder.Entity("LibraryApp.Data.Model.Student", b =>
@@ -315,6 +494,17 @@ namespace LibraryApp.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("LibraryApp.Data.Model.Choice", b =>
+                {
+                    b.HasOne("LibraryApp.Data.Model.MultipleChoiceQuestion", "MultipleChoiceQuestions")
+                        .WithMany("Choices")
+                        .HasForeignKey("MultipleChoiceQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MultipleChoiceQuestions");
+                });
+
             modelBuilder.Entity("LibraryApp.Data.Model.Class", b =>
                 {
                     b.HasOne("LibraryApp.Data.Model.AcademicYear", "AcademicYear")
@@ -337,15 +527,48 @@ namespace LibraryApp.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("LibraryApp.Data.Model.LectureFile", b =>
+            modelBuilder.Entity("LibraryApp.Data.Model.Essay", b =>
                 {
+                    b.HasOne("LibraryApp.Data.Model.Exam", null)
+                        .WithMany("Essays")
+                        .HasForeignKey("ExamId");
+                });
+
+            modelBuilder.Entity("LibraryApp.Data.Model.Exam", b =>
+                {
+                    b.HasOne("LibraryApp.Data.Model.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LibraryApp.Data.Model.Subject", "Subject")
                         .WithMany()
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Department");
+
                     b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("LibraryApp.Data.Model.LectureFile", b =>
+                {
+                    b.HasOne("LibraryApp.Data.Model.Subject", "Subject")
+                        .WithMany("LectureFiles")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("LibraryApp.Data.Model.MultipleChoiceQuestion", b =>
+                {
+                    b.HasOne("LibraryApp.Data.Model.Exam", null)
+                        .WithMany("MultipleChoiceQuestions")
+                        .HasForeignKey("ExamId");
                 });
 
             modelBuilder.Entity("LibraryApp.Data.Model.Subject", b =>
@@ -357,6 +580,23 @@ namespace LibraryApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("LibraryApp.Data.Model.Exam", b =>
+                {
+                    b.Navigation("Essays");
+
+                    b.Navigation("MultipleChoiceQuestions");
+                });
+
+            modelBuilder.Entity("LibraryApp.Data.Model.MultipleChoiceQuestion", b =>
+                {
+                    b.Navigation("Choices");
+                });
+
+            modelBuilder.Entity("LibraryApp.Data.Model.Subject", b =>
+                {
+                    b.Navigation("LectureFiles");
                 });
 
             modelBuilder.Entity("LibraryApp.Data.Model.Teacher", b =>

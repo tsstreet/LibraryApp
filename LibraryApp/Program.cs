@@ -19,6 +19,8 @@ using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using LibraryApp.Services.DocumentService;
 using LibraryApp.Services.LectureFileService;
+using LibraryApp.Services.PrivateFileService;
+using LibraryApp.Services.ExamService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,6 +73,9 @@ builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 
 builder.Services.AddScoped<ILectureFileService, LectureFileService>();
+builder.Services.AddScoped<IPrivateFileService, PrivateFileService>();
+
+builder.Services.AddScoped<IExamService, ExamService>();
 
 var app = builder.Build();
 

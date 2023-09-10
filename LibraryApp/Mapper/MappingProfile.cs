@@ -16,5 +16,7 @@ public class MappingProfile : Profile
         CreateMap<DocumentDto, Document>();
         CreateMap<LectureFileDto, LectureFile>();
 
+        CreateMap<ExamDto, Exam>();
+
     }
 }

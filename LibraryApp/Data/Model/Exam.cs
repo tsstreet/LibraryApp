@@ -5,14 +5,12 @@ namespace LibraryApp.Data.Model
 {
     public class Exam
     {
+
         [Key]
         public int ExamId { get; set; }
 
         [Required]
         public string? Name { get; set; }
-
-        [Required]
-        public string? Type { get; set; }
 
         [Required]
         public string? Form { get; set; }
@@ -24,14 +22,27 @@ namespace LibraryApp.Data.Model
         public string? Duration { get; set; }
 
         [Required]
-        public string? Status { get; set; }
+        public string? Status { get; set; } = "waiting";
 
         [Required]
 
         public int DepartmentId { get; set; }
 
+        public Department Department { get; set; }
+
         [Required]
 
         public int SubjectId { get; set; }
+
+        public Subject Subject { get; set; }
+
+        public bool IsApproved { get; set; } = false;
+
+        public List<MultipleChoiceQuestion> MultipleChoiceQuestions { get; set; }
+        public List<Essay> Essays { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime DateSubmit { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using Azure.Core;
 using LibraryApp.Data.Dto;
 using LibraryApp.Data.Model;
 using LibraryApp.Services.LectureFileService;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +33,7 @@ namespace LibraryApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetSubjectById(int id)
+        public async Task<IActionResult> GetLectureFileById(int id)
         {       
             var getLectureFile = await _lectureFileService.GetLectureFileById(id);
             var getLectureFileDto = _mapper.Map<LectureFile>(getLectureFile);
@@ -40,31 +41,22 @@ namespace LibraryApp.Controllers
             return Ok(getLectureFileDto);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateLecture([FromForm] LectureFileDto lectureFile)
-        //{
-        //    var lectureFileMap = _mapper.Map<LectureFile>(lectureFile);
-        //    var lectureFileGet = await _lectureFileService.CreateLectureFile(lectureFileMap);
-            
-        //    return Ok(lectureFileGet);
-        //}
-
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] LectureFileDto lectureFile)
+        public async Task<IActionResult> Upload([FromForm] LectureFileDto lectureFile)
         {
                 var lectureFileMap = _mapper.Map<LectureFile>(lectureFile);
-                var lectureFileGet = await _lectureFileService.CreateLectureFile(lectureFileMap);
+                var lectureFileGet = await _lectureFileService.UploadLectureFile(lectureFileMap);
                 return Ok(lectureFileGet);
         }
 
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateSubject(int id, SubjectDto subject)
-        //{
-        //    var subjectMap = _mapper.Map<Subject>(subject);
-        //    var subjectUpdate = await _lectureFileService.UpdateSubject(id, subjectMap);
+        [HttpPut("{id}/rename")]
+        public async Task<IActionResult> RenameFile(int id, string reName)
+        {
+            var fileGet = await _lectureFileService.RenameLectureFile(id, reName);
 
-        //    return Ok(subjectMap);
-        //}
+            return Ok(fileGet);
+        }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLectureFile(int id)
@@ -89,5 +81,6 @@ namespace LibraryApp.Controllers
 
             return Ok(search);
         }
+
     }
 }
