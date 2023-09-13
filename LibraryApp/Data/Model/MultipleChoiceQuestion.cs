@@ -10,13 +10,10 @@ namespace LibraryApp.Data.Model
         [Key]
         public int MultipleChoiceQuestionId { get; set; }
 
-        [Required]
-        public string Question { get; set; }
+        public string? Question { get; set; }
 
-        public List<Choice> Choices { get; set; }
-        public string CorrectAnswer { get; set; }
-
-
+        public List<Choice>? Choices { get; set; }
+        public string? CorrectAnswer { get; set; }
         public int ExamId { get; set; }
 
         [JsonIgnore]

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace LibraryApp.Data.Model
 {
@@ -8,8 +9,7 @@ namespace LibraryApp.Data.Model
         [Key]
         public int ChoiceId { get; set; }
 
-        [Required]
-        public string Value { get; set; }
+        public string? Value { get; set; }
 
         public int MultipleChoiceQuestionId { get; set; }
 

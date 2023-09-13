@@ -1,4 +1,5 @@
-﻿using LibraryApp.Data.Model;
+﻿using LibraryApp.Data.Dto;
+using LibraryApp.Data.Model;
 using LibraryApp.Services.DocumentService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,25 +39,41 @@ namespace LibraryApp.Services.ExamService
             return exam;
         }
 
-        public async Task<Exam> CreateExam(Exam exam)
+        public async Task<Exam> CreateExam(ExamDto exam)
         {
             var newExam = new Exam
             {
                 Name = exam.Name,
                 Creator = exam.Creator,
                 DepartmentId = exam.DepartmentId,
+                Form = exam.Form,
                 Status = exam.Status,
                 Duration = exam.Duration,
                 SubjectId = exam.SubjectId,
-                IsApproved = false
+                DateSubmit = exam.DateSubmit,
+
+                IsApproved = false,
             };
 
-            var multipleChoiceQuestion = exam.MultipleChoiceQuestions.Select(m => new MultipleChoiceQuestion
+            if (exam.MultipleChoiceQuestions != null)
             {
-                Question = m.Question,
-                CorrectAnswer = m.CorrectAnswer,
-                Exam = newExam
-            }).ToList();
+                newExam.MultipleChoiceQuestions = exam.MultipleChoiceQuestions.Select(mcq => new MultipleChoiceQuestion
+                {
+                    Question = mcq.Question,
+                    CorrectAnswer = mcq.CorrectAnswer,
+                    Exam = newExam,
+                    Choices = mcq.Choices?.Select(c => new Choice { Value = c.Value }).ToList()
+                }).ToList();
+            }
+
+            if (exam.Essays != null)
+            {
+                newExam.Essays = exam.Essays.Select(e => new Essay
+                {
+                    Question = e.Question,
+                    AnswerType = e.AnswerType
+                }).ToList();
+            }
 
             _context.Exams.Add(newExam);
             await _context.SaveChangesAsync();

@@ -33,5 +33,7 @@ namespace LibraryApp.Data.Model
 
         public DbSet<Exam> Exams { get; set; }
 
+        public DbSet<Topic> Topics { get; set; }
+
     }
 }

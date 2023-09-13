@@ -1,22 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LibraryApp.Data.Model;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LibraryApp.Data.Model
+namespace LibraryApp.Data.Dto
 {
-    public class Topic
+    public class TopicDto
     {
-        [Key]
-        public int TopicId { get; set; }
-
         [Required]
         public string Name { get; set; }
 
         public string? Description { get; set; }
 
-        [Required]
-
         public int SubjectId { get; set; }
 
-        public Subject Subject { get; set; }
     }
 }

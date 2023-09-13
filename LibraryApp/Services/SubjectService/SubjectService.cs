@@ -96,6 +96,13 @@ namespace LibraryApp.Services.SubjectService
             return file.ToList();
         }
 
+        public async Task<ICollection<Topic>> GetTopicBySubject(int id)
+        {
+            var topic = await _context.Subjects.Where(x => x.SubjectId == id).Select(c => c.Topics).FirstOrDefaultAsync();
+
+            return topic.ToList();
+        }
+
 
         public async Task<FileStreamResult> DownloadFiles(int subjectId)
         {

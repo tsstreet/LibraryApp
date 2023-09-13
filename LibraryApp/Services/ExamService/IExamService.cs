@@ -1,4 +1,5 @@
-﻿using LibraryApp.Data.Model;
+﻿using LibraryApp.Data.Dto;
+using LibraryApp.Data.Model;
 using NuGet.Protocol.Plugins;
 
 namespace LibraryApp.Services.ExamService
@@ -9,7 +10,7 @@ namespace LibraryApp.Services.ExamService
 
         Task<Exam> GetExamById(int id);
 
-        Task<Exam> CreateExam(Exam exam);
+        Task<Exam> CreateExam(ExamDto exam);
 
         Task<Exam> UpdateExam(int id, Exam exam);
 

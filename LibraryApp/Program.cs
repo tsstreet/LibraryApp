@@ -21,6 +21,7 @@ using LibraryApp.Services.DocumentService;
 using LibraryApp.Services.LectureFileService;
 using LibraryApp.Services.PrivateFileService;
 using LibraryApp.Services.ExamService;
+using LibraryApp.Services.TopicService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,6 +77,7 @@ builder.Services.AddScoped<ILectureFileService, LectureFileService>();
 builder.Services.AddScoped<IPrivateFileService, PrivateFileService>();
 
 builder.Services.AddScoped<IExamService, ExamService>();
+builder.Services.AddScoped<ITopicService, TopicService>();
 
 var app = builder.Build();
 

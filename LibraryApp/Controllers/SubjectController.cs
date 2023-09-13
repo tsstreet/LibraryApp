@@ -82,6 +82,14 @@ namespace LibraryApp.Controllers
             return Ok(subject);
         }
 
+        [HttpGet("{id}/topic")]
+        public async Task<IActionResult> GetTopicBySubject(int id)
+        {
+            var subject = await _subjectService.GetTopicBySubject(id);
+
+            return Ok(subject);
+        }
+
         [HttpGet("search")]
         public async Task<IActionResult> Search(string searchString)
         {

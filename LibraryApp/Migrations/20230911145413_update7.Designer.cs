@@ -4,6 +4,7 @@ using LibraryApp.Data.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230911145413_update7")]
+    partial class update7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,6 +58,7 @@ namespace LibraryApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ChoiceId");
@@ -155,12 +159,14 @@ namespace LibraryApp.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EssayId"));
 
                     b.Property<string>("AnswerType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ExamId")
                         .HasColumnType("int");
 
                     b.Property<string>("Question")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("EssayId");
@@ -258,13 +264,19 @@ namespace LibraryApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MultipleChoiceQuestionId"));
 
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CorrectAnswer")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ExamId")
                         .HasColumnType("int");
 
                     b.Property<string>("Question")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MultipleChoiceQuestionId");
@@ -446,31 +458,6 @@ namespace LibraryApp.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("LibraryApp.Data.Model.Topic", b =>
-                {
-                    b.Property<int>("TopicId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TopicId"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TopicId");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("Topics");
-                });
-
             modelBuilder.Entity("LibraryApp.Data.Model.User", b =>
                 {
                     b.Property<int>("Id")
@@ -606,17 +593,6 @@ namespace LibraryApp.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("LibraryApp.Data.Model.Topic", b =>
-                {
-                    b.HasOne("LibraryApp.Data.Model.Subject", "Subject")
-                        .WithMany("Topics")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subject");
-                });
-
             modelBuilder.Entity("LibraryApp.Data.Model.Exam", b =>
                 {
                     b.Navigation("Essays");
@@ -632,8 +608,6 @@ namespace LibraryApp.Migrations
             modelBuilder.Entity("LibraryApp.Data.Model.Subject", b =>
                 {
                     b.Navigation("LectureFiles");
-
-                    b.Navigation("Topics");
                 });
 
             modelBuilder.Entity("LibraryApp.Data.Model.Teacher", b =>

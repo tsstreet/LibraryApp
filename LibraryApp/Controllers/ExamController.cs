@@ -41,11 +41,20 @@ namespace LibraryApp.Controllers
             return Ok(getExamDto);
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> AddExam(ExamDto exam)
+        //{
+        //    var examMap = _mapper.Map<Exam>(exam);
+        //    var examGet = await _examService.CreateExam(examMap);
+
+        //    return Ok(examGet);
+        //}
+
         [HttpPost]
         public async Task<IActionResult> AddExam(ExamDto exam)
         {
-            var examMap = _mapper.Map<Exam>(exam);
-            var examGet = await _examService.CreateExam(examMap);
+            //var examMap = _mapper.Map<Exam>(exam);
+            var examGet = await _examService.CreateExam(exam);
 
             return Ok(examGet);
         }

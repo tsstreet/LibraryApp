@@ -72,7 +72,7 @@ namespace LibraryApp.Services.DocumentService
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                subject = subject.Where(s => s.Name.ToLower().Contains(searchString.ToLower()) || s.Name.ToLower().Contains(searchString.ToLower()));
+                subject = subject.Where(s => s.Name.ToLower().Contains(searchString.ToLower()));
             }
 
             return await subject.ToListAsync();

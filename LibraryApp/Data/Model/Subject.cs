@@ -34,5 +34,7 @@ namespace LibraryApp.Data.Model
 
         public ICollection<LectureFile> LectureFiles { get; set; }
 
+        public ICollection<Topic> Topics { get; set; }
+
     }
 }
