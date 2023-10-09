@@ -1,7 +1,8 @@
-﻿using LibraryApp.Data.Model;
+﻿ using LibraryApp.Data.Model;
 using LibraryApp.Services.DocumentService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace LibraryApp.Services.DocumentService
 {
@@ -70,9 +71,14 @@ namespace LibraryApp.Services.DocumentService
             var subject = from s in _context.Documents
                           select s;
 
+            var subjectTest = subject.All(s => s.Status == "waiting");
+
+            var subjectGroup = subject.GroupBy(s => s.Teacher);
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 subject = subject.Where(s => s.Name.ToLower().Contains(searchString.ToLower()));
+                
             }
 
             return await subject.ToListAsync();

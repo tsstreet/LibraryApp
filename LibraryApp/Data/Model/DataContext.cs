@@ -8,13 +8,18 @@ namespace LibraryApp.Data.Model
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
-        //    modelBuilder.Entity<ClassStudent>()
-        //        .HasKey(cs => new { cs.ClassId, cs.StudentId });
 
-        //    foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-        //    {
-        //        relationship.DeleteBehavior = DeleteBehavior.Restrict;
-        //    }
+        //    modelBuilder.Entity<Subject>()
+        //                .HasMany(s => s.Topics)
+        //                .WithOne(t => t.Subject)
+        //                .HasForeignKey(t => t.SubjectId)
+        //                .OnDelete(DeleteBehavior.Cascade);
+
+        //    modelBuilder.Entity<Topic>()
+        //        .HasMany(t => t.Lectures)
+        //        .WithOne()
+        //        .HasForeignKey(l => l.TopicId)
+        //        .OnDelete(DeleteBehavior.Cascade);
         //}
 
         public DbSet<Student> Students { get; set; }
@@ -27,7 +32,7 @@ namespace LibraryApp.Data.Model
 
         public DbSet<Document> Documents { get; set; }
 
-        public DbSet<LectureFile> LectureFiles { get; set; }
+        public DbSet<Lecture> Lectures { get; set; }
 
         public DbSet<PrivateFile> PrivateFiles { get; set; }
 

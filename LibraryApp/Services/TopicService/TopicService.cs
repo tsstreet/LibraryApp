@@ -1,4 +1,5 @@
-﻿using LibraryApp.Data.Model;
+﻿using LibraryApp.Data.Dto;
+using LibraryApp.Data.Model;
 using LibraryApp.Services.TopicService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,7 @@ namespace LibraryApp.Services.TopicService
 
         public async Task<Topic> GetTopicById(int id)
         {
-            var topic = await _context.Topics.FindAsync(id);
+            var topic = await _context.Topics.FirstOrDefaultAsync(x=> x.TopicId == id);
 
             return topic;
         }
@@ -42,7 +43,40 @@ namespace LibraryApp.Services.TopicService
             return topic;
         }
 
-        public async Task<Topic> UpdateTopic(int id, Topic topic)
+        public async Task<ICollection<Lecture>> GetLectureByTopic(int id)
+        {
+            var lecture = await _context.Topics.Where(x => x.TopicId == id).Select(c => c.Lectures).FirstOrDefaultAsync();
+
+            return lecture.ToList();
+        }
+
+            //public async Task<Topic> AddTopic(Topic topic)
+            //{
+            //    var existTopic = await _context.Topics.FirstOrDefaultAsync(x => x.Name == topic.Name);
+
+            //    if (existTopic != null)
+            //    {
+            //        throw new Exception("Topic already exist");
+            //    }
+
+            //    var newTopic = new Topic
+            //    {
+            //        Name = topic.Name,
+            //    };
+
+            //    if (topic.Lectures != null)
+            //    {
+            //        newTopic.Lectures = topic.Lectures.Select(l => new Lecture
+            //        {
+            //        }).ToList();
+            //    }
+
+            //    _context.Topics.Add(topic);
+            //    await _context.SaveChangesAsync();
+            //    return topic;
+            //}
+
+            public async Task<Topic> UpdateTopic(int id, Topic topic)
         {
             var topicUpdate = await _context.Topics.FindAsync(id);
 

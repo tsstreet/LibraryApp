@@ -5,9 +5,6 @@ namespace LibraryApp.Data.Dto
 {
     public class StudentDto
     {
-        [Key]
-        public int StdId { get; set; }
-
         [Required]
         public string? StdCode { get; set; }
 

@@ -5,9 +5,6 @@ namespace LibraryApp.Data.Dto
 {
     public class DocumentDto
     {
-        [Key]
-        public int DocumentId { get; set; }
-
         [Required]
         public string? Name { get; set; }
 

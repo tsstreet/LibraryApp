@@ -75,5 +75,13 @@ namespace LibraryApp.Controllers
 
             return Ok(search);
         }
+
+        [HttpGet("{id}/lecture")]
+        public async Task<IActionResult> GetLectureByTopic(int id)
+        {
+            var lecture = await _topicService.GetLectureByTopic(id);
+
+            return Ok(lecture);
+        }
     }
 }

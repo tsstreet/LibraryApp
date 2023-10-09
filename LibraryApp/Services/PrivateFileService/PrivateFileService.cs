@@ -48,11 +48,12 @@ namespace LibraryApp.Services.PrivateFileService
 
         public async Task<string> RenamePrivateFile(int id, string reName)
         {
-            var lectureFile = await _context.LectureFiles.FindAsync(id);
+            var lectureFile = await _context.PrivateFiles.FindAsync(id);
 
             var fileExtension = Path.GetExtension(lectureFile.Name);
 
             var newFileName = $"{reName}{fileExtension}";
+
 
             lectureFile.Name = newFileName;
 
@@ -177,7 +178,7 @@ namespace LibraryApp.Services.PrivateFileService
 
         public async Task<FileDownloadResult> DownloadFile(int privateFileId)
         {
-            var privateFile = await _context.LectureFiles.FindAsync(privateFileId);
+            var privateFile = await _context.PrivateFiles.FindAsync(privateFileId);
 
             var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "PrivateFiles", privateFile.Name);
 

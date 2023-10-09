@@ -2,7 +2,7 @@
 using Azure.Core;
 using LibraryApp.Data.Dto;
 using LibraryApp.Data.Model;
-using LibraryApp.Services.LectureFileService;
+using LibraryApp.Services.LectureService;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,22 +12,22 @@ namespace LibraryApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LectureFileController : ControllerBase
+    public class LectureController : ControllerBase
     {
-        private readonly ILectureFileService _lectureFileService;
+        private readonly ILectureService _lectureService;
         private readonly IMapper _mapper;
-        public LectureFileController(ILectureFileService lectureFileService, IMapper mapper) 
+        public LectureController(ILectureService lectureService, IMapper mapper) 
         {
-            _lectureFileService = lectureFileService;
+            _lectureService = lectureService;
             _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetLectureFiles()
         {
-            var getLectureFile = await _lectureFileService.GetLectureFiles();
+            var getLectureFile = await _lectureService.GetLectures();
 
-            var getLectureFileDto = _mapper.Map<List<LectureFile>>(getLectureFile);
+            var getLectureFileDto = _mapper.Map<List<Lecture>>(getLectureFile);
 
             return Ok(getLectureFileDto);
         }
@@ -35,24 +35,24 @@ namespace LibraryApp.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetLectureFileById(int id)
         {       
-            var getLectureFile = await _lectureFileService.GetLectureFileById(id);
-            var getLectureFileDto = _mapper.Map<LectureFile>(getLectureFile);
+            var getLectureFile = await _lectureService.GetLectureById(id);
+            var getLectureFileDto = _mapper.Map<Lecture>(getLectureFile);
 
             return Ok(getLectureFileDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Upload([FromForm] LectureFileDto lectureFile)
+        public async Task<IActionResult> Upload([FromForm] LectureDto lectureFile)
         {
-                var lectureFileMap = _mapper.Map<LectureFile>(lectureFile);
-                var lectureFileGet = await _lectureFileService.UploadLectureFile(lectureFileMap);
+                var lectureFileMap = _mapper.Map<Lecture>(lectureFile);
+                var lectureFileGet = await _lectureService.UploadLecture(lectureFileMap);
                 return Ok(lectureFileGet);
         }
 
         [HttpPut("{id}/rename")]
         public async Task<IActionResult> RenameFile(int id, string reName)
         {
-            var fileGet = await _lectureFileService.RenameLectureFile(id, reName);
+            var fileGet = await _lectureService.RenameLectureFile(id, reName);
 
             return Ok(fileGet);
         }
@@ -61,7 +61,7 @@ namespace LibraryApp.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLectureFile(int id)
         {
-            var deleteLectureFile = await _lectureFileService.DeleteLectureFile(id);
+            var deleteLectureFile = await _lectureService.DeleteLecture(id);
 
             return Ok(deleteLectureFile);
         }
@@ -69,7 +69,7 @@ namespace LibraryApp.Controllers
         [HttpGet("{id}/download")]
         public async Task<IActionResult> Download(int id)
         {
-            var lectureFile = await _lectureFileService.DownloadFile(id);
+            var lectureFile = await _lectureService.DownloadFile(id);
 
             return File(lectureFile.FileBytes, "application/octet-stream", lectureFile.FileName);
         }
@@ -77,7 +77,7 @@ namespace LibraryApp.Controllers
         [HttpGet("search")]
         public async Task<IActionResult> Search(string searchString)
         {
-            var search = await _lectureFileService.Search(searchString);
+            var search = await _lectureService.Search(searchString);
 
             return Ok(search);
         }

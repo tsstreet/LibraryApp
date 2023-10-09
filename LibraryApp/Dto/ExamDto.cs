@@ -19,9 +19,6 @@ namespace LibraryApp.Data.Dto
         public string Duration { get; set; }
 
         [Required]
-        public string Status { get; set; } = "waiting";
-
-        [Required]
 
         public int DepartmentId { get; set; }
 

@@ -47,7 +47,7 @@ namespace LibraryApp.Services.ExamService
                 Creator = exam.Creator,
                 DepartmentId = exam.DepartmentId,
                 Form = exam.Form,
-                Status = exam.Status,
+                Status = "waiting",
                 Duration = exam.Duration,
                 SubjectId = exam.SubjectId,
                 DateSubmit = exam.DateSubmit,

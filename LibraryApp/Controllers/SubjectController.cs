@@ -74,13 +74,13 @@ namespace LibraryApp.Controllers
             return Ok(deleteSubject);
         }
 
-        [HttpGet("{id}/file")]
-        public async Task<IActionResult> GetFileBySubject(int id)
-        {
-            var subject = await _subjectService.GetFileBySubject(id);
+        //[HttpGet("{id}/file")]
+        //public async Task<IActionResult> GetFileBySubject(int id)
+        //{
+        //    var subject = await _subjectService.GetFileBySubject(id);
 
-            return Ok(subject);
-        }
+        //    return Ok(subject);
+        //}
 
         [HttpGet("{id}/topic")]
         public async Task<IActionResult> GetTopicBySubject(int id)

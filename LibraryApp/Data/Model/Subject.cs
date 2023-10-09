@@ -32,8 +32,6 @@ namespace LibraryApp.Data.Model
         [Required]
         public string? NumOfWaiting { get; set; }
 
-        public ICollection<LectureFile> LectureFiles { get; set; }
-
         public ICollection<Topic> Topics { get; set; }
 
     }

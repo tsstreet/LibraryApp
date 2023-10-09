@@ -5,9 +5,6 @@ namespace LibraryApp.Data.Dto
 {
     public class Register
     {
-        [Key]
-        public int StdId { get; set; }
-
         [Required]
         public string? Name { get; set; }
 

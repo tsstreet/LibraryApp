@@ -4,14 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibraryApp.Data.Dto
 {
-    public class LectureFileDto
+    public class LectureDto
     {
-        [Key]
-        public int LectureFileId { get; set; }
-
+        [Required]
+        public string Title { get; set; }
 
         [Required]
-        public int SubjectId { get; set; }
+        public int TopicId { get; set; }
 
         public List<IFormFile> File { get; set; }
 

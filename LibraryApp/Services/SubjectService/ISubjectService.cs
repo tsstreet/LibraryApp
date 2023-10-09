@@ -17,7 +17,7 @@ namespace LibraryApp.Services.SubjectService
         Task<Subject> DeleteSubject(int id);
         Task<List<Subject>> Search(string searchString);
 
-        Task<ICollection<LectureFile>> GetFileBySubject(int id);
+        //Task<ICollection<Lecture>> GetFileBySubject(int id);
 
         Task<ICollection<Topic>> GetTopicBySubject(int id);
         Task<FileStreamResult> DownloadFiles(int subjectId);

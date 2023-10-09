@@ -15,6 +15,9 @@ namespace LibraryApp.Services.TopicService
 
         Task<Topic> DeleteTopic(int id);
         Task<List<Topic>> Search(string searchString);
- 
+
+        Task<ICollection<Lecture>> GetLectureByTopic(int id);
+
+
     }
 }

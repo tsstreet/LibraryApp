@@ -3,20 +3,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibraryApp.Data.Model
 {
-    public class LectureFile
+    public class Lecture
     {
         [Key]
-        public int LectureFileId { get; set; }
+        public int LectureId { get; set; }
+
+        [Required]
+        public int TopicId { get; set; }
+
+        public Topic Topic { get; set; }
+
+        [Required]
+        public string Title { get; set; }
 
 
         [Required]
-        public int SubjectId { get; set; }
-
-        public Subject Subject { get; set; }
-        
-      
-        [Required]
-        public string? Name { get; set; }
+        public string? FileName { get; set; }
 
         [NotMapped]
         public List<IFormFile>File { get; set; }

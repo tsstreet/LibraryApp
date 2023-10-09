@@ -89,12 +89,12 @@ namespace LibraryApp.Services.SubjectService
             return await subject.ToListAsync();
         }
 
-        public async Task<ICollection<LectureFile>> GetFileBySubject(int id)
-        {
-            var file = await _context.Subjects.Where(x => x.SubjectId == id).Select(c => c.LectureFiles).FirstOrDefaultAsync();
+        //public async Task<ICollection<Lecture>> GetFileBySubject(int id)
+        //{
+        //    var file = await _context.Subjects.Where(x => x.SubjectId == id).Select(c => c.Lectures).FirstOrDefaultAsync();
 
-            return file.ToList();
-        }
+        //    return file.ToList();
+        //}
 
         public async Task<ICollection<Topic>> GetTopicBySubject(int id)
         {
@@ -106,8 +106,8 @@ namespace LibraryApp.Services.SubjectService
 
         public async Task<FileStreamResult> DownloadFiles(int subjectId)
         {
-            var lectureFiles = await _context.LectureFiles
-                .Where(x => x.SubjectId == subjectId)
+            var lectureFiles = await _context.Lectures
+                .Where(x => x.TopicId == subjectId)
                 .ToListAsync();
 
             var memoryStream = new MemoryStream();
@@ -116,9 +116,9 @@ namespace LibraryApp.Services.SubjectService
             {
                 foreach (var lectureFile in lectureFiles)
                 {
-                    var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files", lectureFile.Name);
+                    var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files", lectureFile.FileName);
 
-                    var entryName = lectureFile.Name;
+                    var entryName = lectureFile.FileName;
                     var entry = zipArchive.CreateEntry(entryName, CompressionLevel.Optimal);
 
                     using (var entryStream = entry.Open())

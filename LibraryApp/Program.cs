@@ -18,7 +18,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using LibraryApp.Services.DocumentService;
-using LibraryApp.Services.LectureFileService;
+using LibraryApp.Services.LectureService;
 using LibraryApp.Services.PrivateFileService;
 using LibraryApp.Services.ExamService;
 using LibraryApp.Services.TopicService;
@@ -73,7 +73,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 
-builder.Services.AddScoped<ILectureFileService, LectureFileService>();
+builder.Services.AddScoped<ILectureService, LectureService>();
 builder.Services.AddScoped<IPrivateFileService, PrivateFileService>();
 
 builder.Services.AddScoped<IExamService, ExamService>();

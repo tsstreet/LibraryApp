@@ -16,9 +16,9 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 
-namespace LibraryApp.Services.LectureFileService
+namespace LibraryApp.Services.LectureService
 {
-    public class LectureFileService : ILectureFileService
+    public class LectureService : ILectureService
     {
         private static IWebHostEnvironment _webHostEnvironment;
         private readonly DataContext _context;
@@ -26,7 +26,7 @@ namespace LibraryApp.Services.LectureFileService
         private readonly IConfiguration _configuration;
 
 
-        public LectureFileService(DataContext context, IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
+        public LectureService(DataContext context, IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
@@ -34,14 +34,14 @@ namespace LibraryApp.Services.LectureFileService
             _configuration = configuration;
         }
 
-        public async Task<List<LectureFile>> GetLectureFiles()
+        public async Task<List<Lecture>> GetLectures()
         {
-            return await _context.LectureFiles.ToListAsync();
+            return await _context.Lectures.ToListAsync();
         }
 
-        public async Task<LectureFile> GetLectureFileById(int id)
+        public async Task<Lecture> GetLectureById(int id)
         {
-            var subject = await _context.LectureFiles.FindAsync(id);
+            var subject = await _context.Lectures.FindAsync(id);
 
             return subject;
         }
@@ -63,48 +63,48 @@ namespace LibraryApp.Services.LectureFileService
 
         public async Task<string> RenameLectureFile(int id, string reName)
         {
-            var lectureFile = await _context.LectureFiles.FindAsync(id);
+            var lectureFile = await _context.Lectures.FindAsync(id);
 
-            var fileExtension = Path.GetExtension(lectureFile.Name);
+            var fileExtension = Path.GetExtension(lectureFile.FileName);
 
             var newFileName = $"{reName}{fileExtension}";
 
-            lectureFile.Name = newFileName;
+            lectureFile.FileName = newFileName;
 
             await _context.SaveChangesAsync();
 
             return reName;
         }
 
-        public async Task<LectureFile> DeleteLectureFile(int id)
+        public async Task<Lecture> DeleteLecture(int id)
         {
 
-            var lectureFile = await _context.LectureFiles.FindAsync(id);
+            var lectureFile = await _context.Lectures.FindAsync(id);
 
             if (lectureFile != null)
             {
-                 var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files", lectureFile.Name);
+                 var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files", lectureFile.FileName);
 
                 if (File.Exists(filePath))
                 {
                     File.Delete(filePath);
                 }
 
-                _context.LectureFiles.Remove(lectureFile);
+                _context.Lectures.Remove(lectureFile);
                 await _context.SaveChangesAsync();
             }
 
             return lectureFile;
         }
 
-        public async Task<List<LectureFile>> Search(string searchString)
+        public async Task<List<Lecture>> Search(string searchString)
         {
-            var subject = from s in _context.LectureFiles
+            var subject = from s in _context.Lectures
                           select s;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                subject = subject.Where(s => s.Name.ToLower().Contains(searchString.ToLower()));
+                subject = subject.Where(s => s.Title.ToLower().Contains(searchString.ToLower()));
             }
 
             return await subject.ToListAsync();
@@ -189,7 +189,7 @@ namespace LibraryApp.Services.LectureFileService
         //    return "Ok";
         //}
 
-        public async Task<string> UploadLectureFile(LectureFile lectureFile)
+        public async Task<string> UploadLecture(Lecture lectureFile)
         {
             if (!Directory.Exists(_webHostEnvironment.ContentRootPath + "\\Files\\"))
             {
@@ -203,7 +203,7 @@ namespace LibraryApp.Services.LectureFileService
                 if (!Directory.Exists(uploadFolderPath))
                     Directory.CreateDirectory(uploadFolderPath);
 
-                var lectureFiles = new List<LectureFile>();
+                var lectureFiles = new List<Lecture>();
 
                 foreach (var file in lectureFile.File)
                 {
@@ -215,10 +215,11 @@ namespace LibraryApp.Services.LectureFileService
                         await file.CopyToAsync(fileStream);
                     }
 
-                    var newLectureFile = new LectureFile
+                    var newLectureFile = new Lecture
                     {
-                        SubjectId = lectureFile.SubjectId,
-                        Name = fileName, 
+                        TopicId = lectureFile.TopicId,   
+                        Title = lectureFile.Title,
+                        FileName = fileName, 
                         Size = FormatFileSize(file.Length),
                         FileType = DetectFileType(file),
                         SubmitDate = lectureFile.SubmitDate
@@ -227,7 +228,7 @@ namespace LibraryApp.Services.LectureFileService
                     lectureFiles.Add(newLectureFile);
                 }
 
-                _context.LectureFiles.AddRange(lectureFiles);
+                _context.Lectures.AddRange(lectureFiles);
                 await _context.SaveChangesAsync();
             }
 
@@ -259,7 +260,9 @@ namespace LibraryApp.Services.LectureFileService
                 { ".ppt", "PowerPoint" },
                 { ".pptx", "PowerPoint" },
                 { ".xls", "Excel" },
-                { ".xlsx", "Excel" }
+                { ".xlsx", "Excel" },
+                { ".png", "Image" },
+                { ".jpeg", "Image" }
             };
 
             var extension = Path.GetExtension(file.FileName);
@@ -304,16 +307,16 @@ namespace LibraryApp.Services.LectureFileService
 
         public async Task<FileDownloadResult> DownloadFile(int lectureFileId)
         {
-            var lectureFile = await _context.LectureFiles.FindAsync(lectureFileId);
+            var lectureFile = await _context.Lectures.FindAsync(lectureFileId);
 
-            var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files", lectureFile.Name);
+            var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files", lectureFile.FileName);
 
             var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
 
             return new FileDownloadResult
             {
                 FileBytes = fileBytes,
-                FileName = lectureFile.Name
+                FileName = lectureFile.FileName
             };
         }
 
